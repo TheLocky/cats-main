@@ -9,6 +9,7 @@ use CATS::Console;
 use CATS::RunDetails;
 use CATS::Problem::Text;
 use CATS::Contest::Results;
+use CATS::StaticPages;
 
 use CATS::UI::About;
 use CATS::UI::Prizes;
@@ -75,6 +76,7 @@ sub main_routes() {
 
         similarity => \&CATS::UI::Stats::similarity_frame,
         personal_official_results => \&CATS::Contest::personal_official_results,
+        static => \&CATS::StaticPages::process_static,
     }
 }
 

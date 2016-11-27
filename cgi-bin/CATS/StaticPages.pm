@@ -6,6 +6,7 @@ use warnings;
 use CATS::Web qw(url_param restore_parameters);
 use CATS::DB;
 use CATS::Config qw(cats_dir);
+use CATS::Router;
 
 sub allowed_pages
 {{
@@ -29,7 +30,9 @@ sub process_static
     my $output_file = path() . name($f, %params) . '.html';
     $params{f} = $f;
     restore_parameters(\%params);
-    return $output_file;
+    my ($rf, $rp) = CATS::Router::route;
+    #return $output_file;
+    ($rf->($rp), $output_file);
 }
 
 

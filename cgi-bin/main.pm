@@ -96,10 +96,10 @@ sub generate_menu {
 
 sub accept_request {
     my $output_file = '';
-    if (CATS::StaticPages::is_static_page) {
-        $output_file = CATS::StaticPages::process_static()
-            or return;
-    }
+    # if (CATS::StaticPages::is_static_page) {
+    #     $output_file = CATS::StaticPages::process_static()
+    #         or return;
+    # }
     initialize;
     $CATS::Misc::init_time = Time::HiRes::tv_interval(
         $CATS::Misc::request_start_time, [ Time::HiRes::gettimeofday ]);
@@ -107,7 +107,8 @@ sub accept_request {
     unless (defined $t) {
         my ($fn, $p) = CATS::Router::route;
         # Function returns -1 if there is no need to generate output, e.g. a redirect was issued.
-        ($fn->($p) || 0) == -1 and return;
+        (my $ret, $output_file) = $fn->($p);
+        ($ret || 0) == -1 and return;
     }
     save_settings;
 
